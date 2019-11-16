@@ -26,7 +26,6 @@ namespace RickMorty.Services
                     
                     var characters = JsonConvert.DeserializeObject<Response>(content);
 
-
                     return characters.Characters;
 
                 }
