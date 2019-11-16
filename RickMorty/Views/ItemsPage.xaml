@@ -26,7 +26,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10">
+                        <!--<StackLayout Padding="10">
                             <Label
                               Text="{Binding Name}"
                               Style="{DynamicResource ListItemTextStyle}"
@@ -37,10 +37,31 @@
                               Style="{DynamicResource ListItemDetailTextStyle}"
                               FontSize="13"
                               LineBreakMode="NoWrap" />
-                        </StackLayout>
+                        </StackLayout>-->
+
+                        <Frame Visual="Material"
+                               HasShadow="False"
+                               Margin="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Margin="8"
+                                       Grid.Column="0"
+                                       Aspect="AspectFill"
+                                       Source="{Binding Image}"/>
+
+                                <Label Text="{Binding Name}"
+                                       Grid.Column="1"/>
+                            </Grid>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="Next"
+                Command="{Binding LoadNext}"/>
     </StackLayout>
 </ContentPage>

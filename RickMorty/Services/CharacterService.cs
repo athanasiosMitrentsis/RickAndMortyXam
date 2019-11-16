@@ -5,16 +5,17 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RickMorty.Models;
+using RickMorty.Models.Dtos;
 
 namespace RickMorty.Services
 {
     public class CharacterService : ICharacterService
     {
-        public async Task<IEnumerable<Character>> GetAll()
+        PageDto<CharacterDto> CurrentPageDto = new PageDto<CharacterDto>();
+
+        async Task<IEnumerable<CharacterDto>> GetAll(string uri)
         {
             var client = new HttpClient();
-
-            var uri = "https://rickandmortyapi.com/api/character/";
 
             var response = await client.GetAsync(uri);
 
@@ -23,10 +24,12 @@ namespace RickMorty.Services
                 try
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    
-                    var characters = JsonConvert.DeserializeObject<Response>(content);
 
-                    return characters.Characters;
+                    var page = JsonConvert.DeserializeObject<PageDto<CharacterDto>>(content);
+
+                    CurrentPageDto = page;
+
+                    return page.Results;
 
                 }
                 catch (Exception e)
@@ -38,6 +41,16 @@ namespace RickMorty.Services
             return null;
         }
 
+        public async Task<IEnumerable<CharacterDto>> GetCharacters()
+        {
+            var uri = "https://rickandmortyapi.com/api/character/";
+            return await GetAll(uri);
+        }
 
+        public async Task<IEnumerable<CharacterDto>> Next(string next)
+        {
+            var nextUrl = CurrentPageDto.Info.Next;
+            return await GetAll(nextUrl);
+        }
     }
 }
