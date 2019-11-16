@@ -4,15 +4,12 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
-
-using RickMorty.Models;
 using RickMorty.Services;
 
 namespace RickMorty.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
         public ICharacterService ICharacterService => DependencyService.Get<ICharacterService>();
 
         bool isBusy = false;
