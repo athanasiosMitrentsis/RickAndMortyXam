@@ -1,8 +1,5 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 using RickMorty.Services;
-using RickMorty.Views;
 
 namespace RickMorty
 {
@@ -13,7 +10,6 @@ namespace RickMorty
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             DependencyService.Register<CharacterService>();
             MainPage = new AppShell();
         }
