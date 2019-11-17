@@ -55,18 +55,18 @@ namespace RickMorty.ViewModels
 
         async Task LoadNextImpl()
         {
-            IsBusy = true;
+            //IsBusy = true;
 
-            var fakeNextUri = "";
+            //var fakeNextUri = "";
 
-            var nextItems = await ICharacterService.Next(fakeNextUri);
+            //var nextItems = await ICharacterService.Next(fakeNextUri);
 
-            foreach(var character in nextItems)
-            {
-                Items.Add(character);
-            }
+            //foreach(var character in nextItems)
+            //{
+            //    Items.Add(character);
+            //}
 
-            IsBusy = false;
+            //IsBusy = false;
         }
     }
 }

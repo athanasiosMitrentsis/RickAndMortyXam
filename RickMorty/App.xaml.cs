@@ -11,6 +11,8 @@ namespace RickMorty
             InitializeComponent();
 
             DependencyService.Register<CharacterService>();
+            DependencyService.Register<LocationService>();
+
             MainPage = new AppShell();
         }
 
