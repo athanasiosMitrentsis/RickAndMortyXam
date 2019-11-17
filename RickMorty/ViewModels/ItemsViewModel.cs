@@ -6,27 +6,24 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 
 using RickMorty.Models;
-using RickMorty.Views;
+using RickMorty.Models.Dtos;
 
 namespace RickMorty.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public ObservableCollection<Character> Items { get; set; }
+        public ObservableCollection<CharacterDto> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
+        public Command LoadNext { get; set; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Character>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            Items = new ObservableCollection<CharacterDto>();
 
-            //MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as Item;
-            //    Items.Add(newItem);
-            //    await DataStore.AddItemAsync(newItem);
-            //});
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            LoadNext = new Command(async () => await LoadNextImpl());
+
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -39,7 +36,8 @@ namespace RickMorty.ViewModels
             try
             {
                 Items.Clear();
-                var items = await ICharacterService.GetAll();
+                var items = await ICharacterService.GetCharacters();
+
                 foreach (var item in items)
                 {
                     Items.Add(item);
@@ -53,6 +51,22 @@ namespace RickMorty.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        async Task LoadNextImpl()
+        {
+            //IsBusy = true;
+
+            //var fakeNextUri = "";
+
+            //var nextItems = await ICharacterService.Next(fakeNextUri);
+
+            //foreach(var character in nextItems)
+            //{
+            //    Items.Add(character);
+            //}
+
+            //IsBusy = false;
         }
     }
 }

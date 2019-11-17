@@ -1,43 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using RickMorty.Models;
+using RickMorty.Models.Dtos;
 
 namespace RickMorty.Services
 {
-    public class CharacterService : ICharacterService
+    public class CharacterService : BaseService, ICharacterService
     {
-        public async Task<IEnumerable<Character>> GetAll()
+        PageDto<CharacterDto> CurrentPageDto = new PageDto<CharacterDto>();
+
+        public async Task<IEnumerable<CharacterDto>> GetCharacters()
         {
-            var client = new HttpClient();
-
-            var uri = "https://rickandmortyapi.com/api/character/";
-
-            var response = await client.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
-            {
-                try
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    
-                    var characters = JsonConvert.DeserializeObject<Response>(content);
-
-                    return characters.Characters;
-
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.StackTrace);
-                }
-            }
-
-            return null;
+            var dto = await GetPage();
+            return dto.Results;
         }
 
+        public async Task<IEnumerable<CharacterDto>> Next(string next)
+        {
+            throw new NotImplementedException();
+        }
 
+        private async Task<PageDto<CharacterDto>> GetPage()
+        {
+            var pageDto = await Get<CharacterDto>("api/character");
+            return CurrentPageDto = pageDto;
+        }
     }
 }

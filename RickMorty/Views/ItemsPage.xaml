@@ -5,9 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:d="http://xamarin.com/schemas/2014/forms/design"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  x:Name="BrowseItemsPage"
-  Title="{Binding Title}"
-  mc:Ignorable="d">
+  Title="{Binding Title}">
     <ContentPage.ToolbarItems>
         <ToolbarItem
           Text="Add"
@@ -24,36 +22,46 @@
           ItemsSource="{Binding Items}"
           RefreshCommand="{Binding LoadItemsCommand}"
           VerticalOptions="FillAndExpand">
-            <d:ListView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>First Item</x:String>
-                    <x:String>Second Item</x:String>
-                    <x:String>Third Item</x:String>
-                    <x:String>Fourth Item</x:String>
-                    <x:String>Fifth Item</x:String>
-                    <x:String>Sixth Item</x:String>
-                </x:Array>
-            </d:ListView.ItemsSource>
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10">
+                        <!--<StackLayout Padding="10">
                             <Label
                               Text="{Binding Name}"
                               Style="{DynamicResource ListItemTextStyle}"
-                              d:Text="{Binding .}"
                               FontSize="16"
                               LineBreakMode="NoWrap" />
                             <Label
                               Text="{Binding Status}"
                               Style="{DynamicResource ListItemDetailTextStyle}"
-                              d:Text="Item description"
                               FontSize="13"
                               LineBreakMode="NoWrap" />
-                        </StackLayout>
+                        </StackLayout>-->
+
+                        <Frame Visual="Material"
+                               HasShadow="False"
+                               Margin="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Margin="8"
+                                       Grid.Column="0"
+                                       Aspect="AspectFill"
+                                       Source="{Binding Image}"/>
+
+                                <Label Text="{Binding Name}"
+                                       Grid.Column="1"/>
+                            </Grid>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="Next"
+                Command="{Binding LoadNext}"/>
     </StackLayout>
 </ContentPage>

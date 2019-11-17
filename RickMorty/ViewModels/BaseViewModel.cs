@@ -11,6 +11,7 @@ namespace RickMorty.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public ICharacterService ICharacterService => DependencyService.Get<ICharacterService>();
+        public ILocationService ILocationService => DependencyService.Get<ILocationService>();
 
         bool isBusy = false;
         public bool IsBusy
